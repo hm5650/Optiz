@@ -3,6 +3,7 @@
 local Config = {
     ENABLED = true,
     OPTIMIZATION_INTERVAL = 30,
+    SHOW_UPDATELOG = true,
     MIN_INTERVAL = 3,
     MAX_DISTANCE = 50,
     PERFORMANCE_MONITORING = true,
@@ -24,6 +25,14 @@ local Config = {
     QUALITY_LEVEL = 1,
     FPS_CAP = 1000,
     MEMORY_CLEANUP_THRESHOLD = 500,
+    NETWORK_OPTIMIZATION = true,
+    REDUCE_REPLICATION = true,
+    THROTTLE_REMOTE_EVENTS = false,
+    OPTIMIZE_CHAT = true,
+    DISABLE_UNNECESSARY_GUI = true,
+    STREAMING_ENABLED = true,
+    REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
+    THROTTLE_SOUNDS = true,
 }
 
 local function Main(ExternalConfig)
@@ -77,6 +86,139 @@ local function Main(ExternalConfig)
         Workspace.DescendantAdded:Connect(handleInstance)
     end
     setSmoothPlastic()
+    local function UpdateLog()
+    	if not Config.SHOW_UPDATELOG then return end
+    	local Players = game:GetService("Players")
+    	local LocalPlayer = Players.LocalPlayer
+    	local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+    	local ScreenGui = Instance.new("ScreenGui")
+    	ScreenGui.Name = "UpdateLogUI"
+    	ScreenGui.ResetOnSpawn = false
+    	ScreenGui.Parent = PlayerGui
+    	local MainFrame = Instance.new("Frame")
+    	MainFrame.Name = "MainFrame"
+    	MainFrame.Size = UDim2.new(0, 350, 0, 250)
+    	MainFrame.Position = UDim2.new(0.5, -175, 0.5, -125)
+    	MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    	MainFrame.BackgroundTransparency = 0.15
+    	MainFrame.BorderSizePixel = 0
+    	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    	MainFrame.Active = true
+    	MainFrame.Draggable = true
+    	MainFrame.Parent = ScreenGui
+    	local UICorner = Instance.new("UICorner", MainFrame)
+    	UICorner.CornerRadius = UDim.new(0, 10)
+    	local Title = Instance.new("TextLabel")
+    	Title.Size = UDim2.new(1, -60, 0, 30)
+    	Title.Position = UDim2.new(0, 10, 0, 5)
+    	Title.BackgroundTransparency = 1
+    	Title.Text = "📜 New Variables"
+    	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    	Title.TextScaled = true
+    	Title.Font = Enum.Font.GothamBold
+    	Title.TextXAlignment = Enum.TextXAlignment.Left
+    	Title.Parent = MainFrame
+    	local CloseBtn = Instance.new("TextButton")
+    	CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+    	CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+    	CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    	CloseBtn.Text = "x"
+    	CloseBtn.TextColor3 = Color3.new(1, 1, 1)
+    	CloseBtn.TextScaled = true
+    	CloseBtn.Font = Enum.Font.GothamBold
+    	CloseBtn.Parent = MainFrame
+    	local CloseCorner = Instance.new("UICorner", CloseBtn)
+    	CloseCorner.CornerRadius = UDim.new(1, 0)
+    	local ScrollFrame = Instance.new("ScrollingFrame")
+    	ScrollFrame.Size = UDim2.new(1, -20, 1, -80)
+    	ScrollFrame.Position = UDim2.new(0, 10, 0, 45)
+    	ScrollFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    	ScrollFrame.BorderSizePixel = 0
+    	ScrollFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+    	ScrollFrame.ScrollBarThickness = 6
+    	ScrollFrame.Parent = MainFrame
+    	local ScrollCorner = Instance.new("UICorner", ScrollFrame)
+    	ScrollCorner.CornerRadius = UDim.new(0, 6)
+    	local TextLabel = Instance.new("TextLabel")
+    	TextLabel.Size = UDim2.new(1, -10, 0, 300)
+    	TextLabel.Position = UDim2.new(0, 5, 0, 5)
+    	TextLabel.BackgroundTransparency = 1
+    	TextLabel.TextColor3 = Color3.fromRGB(230, 230, 230)
+    	TextLabel.TextWrapped = true
+    	TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    	TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+    	TextLabel.Font = Enum.Font.Gotham
+    	TextLabel.TextSize = 16
+    	TextLabel.Text = [[
+    -- New Variables
+    SHOW_UPDATELOG = true,
+    NETWORK_OPTIMIZATION = true,
+    REDUCE_REPLICATION = true,
+    THROTTLE_REMOTE_EVENTS = false, -- risky
+    OPTIMIZE_CHAT = true,
+    DISABLE_UNNECESSARY_GUI = true,
+    STREAMING_ENABLED = true,
+    REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
+    THROTTLE_SOUNDS = true,
+    
+    -- Previous Variables
+    ENABLED = true,
+    OPTIMIZATION_INTERVAL = 30,
+    MIN_INTERVAL = 3,
+    MAX_DISTANCE = 50,
+    PERFORMANCE_MONITORING = true,
+    FPS_THRESHOLD = 30,
+    GRAY_SKY_ENABLED = true,
+    FULL_BRIGHT_ENABLED = true,
+    SMOOTH_PLASTIC_ENABLED = true,
+    OPTIMIZE_PHYSICS = true,
+    DISABLE_CONSTRAINTS = true,
+    THROTTLE_PARTICLES = true,
+    THROTTLE_TEXTURES = true,
+    REMOVE_ANIMATIONS = true,
+    LOW_POLY_CONVERSION = true,
+    SELECTIVE_TEXTURE_REMOVAL = true,
+    PRESERVE_IMPORTANT_TEXTURES = true,
+    IMPORTANT_TEXTURE_KEYWORDS = {"sign", "ui", "hud", "menu", "button", "fence"},
+    QUALITY_LEVEL = 1,
+    FPS_CAP = 1000,
+    MEMORY_CLEANUP_THRESHOLD = 500,
+    ]]
+    	TextLabel.Parent = ScrollFrame
+    	ScrollFrame.CanvasSize = UDim2.new(0, 0, 0, TextLabel.TextBounds.Y + 10)
+    	--// Copy Text Button
+    	local CopyBtn = Instance.new("TextButton")
+    	CopyBtn.Size = UDim2.new(0, 150, 0, 35)
+    	CopyBtn.Position = UDim2.new(0.5, -75, 1, -40)
+    	CopyBtn.BackgroundColor3 = Color3.fromRGB(50, 120, 255)
+    	CopyBtn.Text = "Copy Variable"
+    	CopyBtn.TextColor3 = Color3.new(1, 1, 1)
+    	CopyBtn.TextScaled = true
+    	CopyBtn.Font = Enum.Font.GothamBold
+    	CopyBtn.Parent = MainFrame
+    	local CopyCorner = Instance.new("UICorner", CopyBtn)
+    	CopyCorner.CornerRadius = UDim.new(0, 8)
+    	--// Copy Function
+    	local function CopyToClipboard(text)
+    		setclipboard = setclipboard or toclipboard
+    		if setclipboard then
+    			setclipboard(text)
+    		else
+    			warn("Clipboard function not supported.")
+    		end
+    	end
+    	CopyBtn.MouseButton1Click:Connect(function()
+    		CopyToClipboard(TextLabel.Text)
+    		CopyBtn.Text = "Copied!"
+    		task.wait(1.5)
+    		CopyBtn.Text = "Copy Variable"
+    	end)
+    	--// Close Button Behavior
+    	CloseBtn.MouseButton1Click:Connect(function()
+    		ScreenGui:Destroy()
+    	end)
+    end
+    UpdateLog()
     local function RemoveMesh(target)
         local textureKeywords = {
             "chair", "seat", "stool", "bench", "coffee", "fruit", "paper", "document", 
@@ -697,34 +839,181 @@ local function Main(ExternalConfig)
             end
         end
     end
-    local function removeOtherPlayerAccessories()
-        if not localPlayer then
-            warn("LocalPlayer not available yet.")
-            return
+    local function optimizeNetworkSettings()
+        if not Config.NETWORK_OPTIMIZATION then return end
+        
+        settings().Network.StreamingEnabled = Config.STREAMING_ENABLED
+        
+        if settings().Physics then
+            settings().Physics.PhysicsSendRate = 30
+            settings().Physics.PhysicsSendRate = 60
         end
+        
         for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= localPlayer then
-                local character = player.Character
-                if character then
-                    for _, descendant in ipairs(character:GetChildren()) do
-                        if descendant:IsA("Accessory") then
-                            descendant:Destroy()
-                        end
+            if player ~= LocalPlayer and player.Character then
+                local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    pcall(function()
+                        humanoid.AutoJumpEnabled = false
+                    end)
+                end
+            end
+        end
+    end
+    local function reduceReplication()
+        if not Config.REDUCE_REPLICATION then return end
+        
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if obj:IsA("BasePart") then
+                if obj.Anchored and not obj:IsDescendantOf(LocalPlayer.Character) then
+                    pcall(function()
+                        obj:SetNetworkOwner(nil)
+                    end)
+                end
+                
+                local distance = 0
+                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    distance = (obj.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                end
+                
+                if distance > Config.REDUCE_PLAYER_REPLICATION_DISTANCE then
+                    pcall(function()
+                        obj:SetNetworkOwnershipAuto()
+                    end)
+                end
+            end
+        end
+    end
+    local function throttleRemoteEvents()
+        if not Config.THROTTLE_REMOTE_EVENTS then return end
+        
+        local remoteThrottle = {}
+        local maxCallsPerSecond = 10
+        
+        local function throttleRemote(remote, ...)
+            local currentTime = tick()
+            local remoteId = tostring(remote)
+            
+            if not remoteThrottle[remoteId] then
+                remoteThrottle[remoteId] = {}
+            end
+            
+            for i = #remoteThrottle[remoteId], 1, -1 do
+                if currentTime - remoteThrottle[remoteId][i] > 1 then
+                    table.remove(remoteThrottle[remoteId], i)
+                end
+            end
+            
+            if #remoteThrottle[remoteId] < maxCallsPerSecond then
+                table.insert(remoteThrottle[remoteId], currentTime)
+                return true
+            end
+            
+            return false
+        end
+        
+        for _, obj in ipairs(game:GetDescendants()) do
+            if obj:IsA("RemoteEvent") then
+                local oldFireServer = obj.FireServer
+                obj.FireServer = function(self, ...)
+                    if throttleRemote(self, ...) then
+                        return oldFireServer(self, ...)
+                    end
+                end
+            elseif obj:IsA("RemoteFunction") then
+                local oldInvokeServer = obj.InvokeServer
+                obj.InvokeServer = function(self, ...)
+                    if throttleRemote(self, ...) then
+                        return oldInvokeServer(self, ...)
                     end
                 end
             end
         end
-        print("Accessories removed from other players' characters.")
     end
-    Players.PlayerAdded:Connect(function(player)
-        if player ~= localPlayer then
-            player.CharacterAdded:Connect(function()
-                task.wait(0.5) 
-                removeOtherPlayerAccessories()
+    local function optimizeChat()
+        if not Config.OPTIMIZE_CHAT then return end
+        
+        local TextChatService = game:GetService("TextChatService")
+        local Players = game:GetService("Players")
+        
+        pcall(function()
+            if TextChatService then
+                local channel = TextChatService:FindFirstChild("TextChannels"):FindFirstChild("RBXGeneral")
+                if channel then
+                    channel.MaximumChannelHistory = 50
+                end
+            end
+        end)
+        
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer then
+                pcall(function()
+                    if player:GetAttribute("BubbleChatEnabled") ~= nil then
+                        player:SetAttribute("BubbleChatEnabled", false)
+                    end
+                end)
+            end
+        end
+    end
+    local function disableUnnecessaryGUI()
+        if not Config.DISABLE_UNNECESSARY_GUI then return end
+        
+        local CoreGui = game:GetService("CoreGui")
+        local GuiService = game:GetService("GuiService")
+        
+        local elementsToDisable = {
+            "PlayerList", 
+            "EmotesMenu", 
+            "Health",
+            "BubbleChat"
+        }
+        
+        for _, element in ipairs(elementsToDisable) do
+            pcall(function()
+                local guiElement = CoreGui:FindFirstChild(element)
+                if guiElement then
+                    guiElement.Enabled = false
+                end
             end)
         end
-    end)
-    removeOtherPlayerAccessories()
+        
+        GuiService:SetGlobalGuiInset(0, 0, 0, 0)
+    end
+    local function throttleSounds()
+        if not Config.THROTTLE_SOUNDS then return end
+        
+        for _, sound in ipairs(workspace:GetDescendants()) do
+            if sound:IsA("Sound") then
+                local distance = 0
+                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    distance = (sound.Parent and sound.Parent:IsA("BasePart") and 
+                               (sound.Parent.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude) or 0
+                end
+                
+                if distance > Config.MAX_DISTANCE then
+                    sound:Stop()
+                    sound.Playing = false
+                elseif distance > Config.MAX_DISTANCE / 2 then
+                    sound.Volume = sound.Volume * 0.3
+                end
+            end
+        end
+    end
+    local function optimizeDataModel()
+        local HttpService = game:GetService("HttpService")
+        local Stats = game:GetService("Stats")
+        
+        pcall(function()
+            HttpService.HttpEnabled = false
+        end)
+        
+        pcall(function()
+            if Stats then
+                Stats.PerformanceStats.MeshCacheSize = 10
+                Stats.PerformanceStats.TextureCacheSize = 10
+            end
+        end)
+    end
     local function applya()
         if not Config.ENABLED then return end
         
@@ -749,7 +1038,16 @@ local function Main(ExternalConfig)
         binmem()
         selectiveTextureRemoval()
         monitorPerformance()
-        RemoveMesh()
+        if Config.REMOVE_MESH then
+            RemoveMesh()
+        end
+        optimizeNetworkSettings()
+        reduceReplication()
+        throttleRemoteEvents()
+        optimizeChat()
+        disableUnnecessaryGUI()
+        throttleSounds()
+        optimizeDataModel()
     end
     applya()
     Players.PlayerAdded:Connect(function(player)
