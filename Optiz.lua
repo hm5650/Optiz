@@ -510,6 +510,25 @@ local function Main(ExternalConfig)
         end)
     end
     removeGrass()
+    local function NoParticles()
+        if not Config.DESTROY_PARTICLES then return end
+        local RunService = game:GetService("RunService")
+        local workspace = game:GetService("Workspace")
+        local function removeParticleEmitters()
+            for _, descendant in ipairs(workspace:GetDescendants()) do
+                -- Check if the object is a ParticleEmitter
+                if descendant:IsA("ParticleEmitter") then
+                    descendant:Destroy()
+                end
+            end
+        end
+        
+        while true do
+            removeParticleEmitters()
+            wait(0.1)
+        end
+    end
+    NoParticles()
     local function fpsc()
         if not Config.FPS_MONITOR then return end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
@@ -1203,24 +1222,6 @@ local function Main(ExternalConfig)
                 Stats.PerformanceStats.TextureCacheSize = 10
             end
         end)
-    end
-    local function NoParticles()
-        if not Config.DESTROY_PARTICLES then return end
-        local RunService = game:GetService("RunService")
-        local workspace = game:GetService("Workspace")
-        local function removeParticleEmitters()
-            for _, descendant in ipairs(workspace:GetDescendants()) do
-                -- Check if the object is a ParticleEmitter
-                if descendant:IsA("ParticleEmitter") then
-                    descendant:Destroy()
-                end
-            end
-        end
-        
-        while true do
-            removeParticleEmitters()
-            wait(0.1)
-        end
     end
     local function applya()
         if not Config.ENABLED then return end
