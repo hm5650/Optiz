@@ -458,6 +458,57 @@ local function Main(ExternalConfig)
         end
     end
     RemoveMesh()
+    local function removeGrass()
+        if not Config.REMOVE_GRASS then return end
+        
+        if not game:IsLoaded() then
+            repeat
+                task.wait()
+            until game:IsLoaded()
+        end
+        coroutine.wrap(pcall)(function()
+            local terrain = workspace:FindFirstChildOfClass("Terrain")
+            if not terrain then
+                repeat
+                    task.wait()
+                until workspace:FindFirstChildOfClass("Terrain")
+                terrain = workspace:FindFirstChildOfClass("Terrain")
+            end
+            
+            if sethiddenproperty then
+                sethiddenproperty(terrain, "Decoration", false)
+            else
+                -- Fallback method if sethiddenproperty is not available
+                pcall(function()
+                    terrain.Decoration = false
+                end)
+                warn("Your exploit does not support sethiddenproperty, using alternative method.")
+            end
+            
+            -- Additional grass/foliage removal methods
+            pcall(function()
+                -- Remove grass parts that might already be loaded
+                for _, obj in ipairs(workspace:GetDescendants()) do
+                    if obj:IsA("Part") and (string.lower(obj.Name):find("grass") or 
+                       string.lower(obj.Name):find("foliage") or 
+                       string.lower(obj.Name):find("leaf") or
+                       string.lower(obj.Name):find("plant")) then
+                        obj:Destroy()
+                    end
+                end
+                
+                -- Set terrain attributes to minimize grass
+                terrain:SetAttribute("GrassEnabled", false)
+                terrain:SetAttribute("GrassDistance", 0)
+                terrain:SetAttribute("GrassDensity", 0)
+            end)
+            
+            if _G.ConsoleLogs then
+                warn("Grass and Decorations Disabled")
+            end
+        end)
+    end
+    removeGrass()
     local function fpsc()
         if not Config.FPS_MONITOR then return end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
@@ -1152,57 +1203,6 @@ local function Main(ExternalConfig)
             end
         end)
     end
-    local function removeGrass()
-        if not Config.REMOVE_GRASS then return end
-        
-        if not game:IsLoaded() then
-            repeat
-                task.wait()
-            until game:IsLoaded()
-        end
-        coroutine.wrap(pcall)(function()
-            local terrain = workspace:FindFirstChildOfClass("Terrain")
-            if not terrain then
-                repeat
-                    task.wait()
-                until workspace:FindFirstChildOfClass("Terrain")
-                terrain = workspace:FindFirstChildOfClass("Terrain")
-            end
-            
-            if sethiddenproperty then
-                sethiddenproperty(terrain, "Decoration", false)
-            else
-                -- Fallback method if sethiddenproperty is not available
-                pcall(function()
-                    terrain.Decoration = false
-                end)
-                warn("Your exploit does not support sethiddenproperty, using alternative method.")
-            end
-            
-            -- Additional grass/foliage removal methods
-            pcall(function()
-                -- Remove grass parts that might already be loaded
-                for _, obj in ipairs(workspace:GetDescendants()) do
-                    if obj:IsA("Part") and (string.lower(obj.Name):find("grass") or 
-                       string.lower(obj.Name):find("foliage") or 
-                       string.lower(obj.Name):find("leaf") or
-                       string.lower(obj.Name):find("plant")) then
-                        obj:Destroy()
-                    end
-                end
-                
-                -- Set terrain attributes to minimize grass
-                terrain:SetAttribute("GrassEnabled", false)
-                terrain:SetAttribute("GrassDistance", 0)
-                terrain:SetAttribute("GrassDensity", 0)
-            end)
-            
-            if _G.ConsoleLogs then
-                warn("Grass and Decorations Disabled")
-            end
-        end)
-    end
-    removeGrass()
     local function applya()
         if not Config.ENABLED then return end
         
@@ -1237,6 +1237,7 @@ local function Main(ExternalConfig)
         disableUnnecessaryGUI()
         throttleSounds()
         optimizeDataModel()
+        removeGrass
     end
     applya()
     Players.PlayerAdded:Connect(function(player)
