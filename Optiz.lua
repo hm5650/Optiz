@@ -34,7 +34,6 @@ local Config = {
     STREAMING_ENABLED = true,
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
-    REMOVE_GRASS = true,
 }
 
 local function Main(ExternalConfig)
@@ -1184,7 +1183,6 @@ local function Main(ExternalConfig)
         disableUnnecessaryGUI()
         throttleSounds()
         optimizeDataModel()
-        removeGrass
     end
     applya()
     Players.PlayerAdded:Connect(function(player)
