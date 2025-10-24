@@ -34,7 +34,7 @@ local Config = {
     STREAMING_ENABLED = true,
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
-    REMOVE_GRASS/PARTICLES = true,
+    DESTROY_PARTICLES = true,
 }
 
 local function Main(ExternalConfig)
@@ -208,7 +208,7 @@ local function Main(ExternalConfig)
         STREAMING_ENABLED = true,
         REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
         THROTTLE_SOUNDS = true,
-        REMOVE_GRASS/PARTICLES = true,
+        DESTROY_PARTICLES = true,
     }
     ]]
         contentLabel.Text = configText
@@ -460,10 +460,10 @@ local function Main(ExternalConfig)
     end
     RemoveMesh()
     local function gpl()
-        if not Config.REMOVE_GRASS/PARTICLES then return end
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Optiz/refs/heads/main/Stuff.lua", true))()
+        if not Config.DESTROY_PARTICLES then return end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
     end
-    gpl()
+    RemoveMesh()
     local function fpsc()
         if not Config.FPS_MONITOR then return end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
