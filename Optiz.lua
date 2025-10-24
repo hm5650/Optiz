@@ -1202,6 +1202,7 @@ local function Main(ExternalConfig)
         disableUnnecessaryGUI()
         throttleSounds()
         optimizeDataModel()
+        RemoveEmitters()
     end
     applya()
     Players.PlayerAdded:Connect(function(player)
