@@ -34,7 +34,7 @@ local Config = {
     STREAMING_ENABLED = true,
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
-    DESTROY_PARTICLES = true,
+    DESTROY_EMITTERS = true,
 }
 
 local function Main(ExternalConfig)
@@ -208,7 +208,7 @@ local function Main(ExternalConfig)
         STREAMING_ENABLED = true,
         REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
         THROTTLE_SOUNDS = true,
-        DESTROY_PARTICLES = true,
+        DESTROY_EMITTERS = true,
     }
     ]]
         contentLabel.Text = configText
@@ -459,11 +459,21 @@ local function Main(ExternalConfig)
         end
     end
     RemoveMesh()
-    local function gpl()
-        if not Config.DESTROY_PARTICLES then return end
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Optiz/refs/heads/main/Stuff.lua", true))()
+    local function RemoveEmitters()
+        if not Config.DESTROY_EMITTERS then return end
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if obj:IsA("ParticleEmitter") 
+            or obj:IsA("Trail") 
+            or obj:IsA("Fire") 
+            or obj:IsA("Smoke") 
+            or obj:IsA("Sparkles") then
+                obj:Destroy() -- Completely removes the emitter
+            end
+        end
     end
-    RemoveMesh()
+    -- Example usage:
+    RemoveEmitters()
+
     local function fpsc()
         if not Config.FPS_MONITOR then return end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
