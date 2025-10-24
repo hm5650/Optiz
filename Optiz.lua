@@ -34,8 +34,6 @@ local Config = {
     STREAMING_ENABLED = true,
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
-    REMOVE_GRASS = true,
-    DESTROY_PARTICLES = true,
 }
 
 local function Main(ExternalConfig)
@@ -1153,25 +1151,6 @@ local function Main(ExternalConfig)
             end
         end)
     end
-    local function NoParticles()
-        if not Config.DESTROY_PARTICLES then return end
-        local RunService = game:GetService("RunService")
-        local workspace = game:GetService("Workspace")
-        local function removeParticleEmitters()
-            for _, descendant in ipairs(workspace:GetDescendants()) do
-                -- Check if the object is a ParticleEmitter
-                if descendant:IsA("ParticleEmitter") then
-                    descendant:Destroy()
-                end
-            end
-        end
-        
-        while true do
-            removeParticleEmitters()
-            wait(0.1)
-        end
-    end
-    NoParticles()
     local function applya()
         if not Config.ENABLED then return end
         
@@ -1206,7 +1185,6 @@ local function Main(ExternalConfig)
         disableUnnecessaryGUI()
         throttleSounds()
         optimizeDataModel()
-        NoParticles()
     end
     applya()
     Players.PlayerAdded:Connect(function(player)
