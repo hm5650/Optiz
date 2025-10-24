@@ -34,7 +34,7 @@ local Config = {
     STREAMING_ENABLED = true,
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
-    REMOVE_GRASS
+    REMOVE_GRASS = true,
 }
 
 local function Main(ExternalConfig)
