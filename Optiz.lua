@@ -1,4 +1,4 @@
--- >:(
+-- i hate making things look pretty >:(
 
 local Config = {
     OPTIZ = true,
