@@ -1,4 +1,4 @@
--- what are you doing here?!
+-- Hey this for testing >:(
 
 local Config = {
     ENABLED = true,
@@ -35,6 +35,7 @@ local Config = {
     REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
     THROTTLE_SOUNDS = true,
     DESTROY_EMITTERS = true,
+    REMOVE_GRASS = true,
 }
 
 local function Main(ExternalConfig)
@@ -177,13 +178,26 @@ local function Main(ExternalConfig)
         local configText = [[
     -- like the new design ;)
     local OptizConfig = {
+        -- New Variables
+        NETWORK_OPTIMIZATION = true,
+        REDUCE_REPLICATION = true,
+        THROTTLE_REMOTE_EVENTS = true,
+        OPTIMIZE_CHAT = true,
+        DISABLE_UNNECESSARY_GUI = true,
+        STREAMING_ENABLED = true,
+        REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
+        THROTTLE_SOUNDS = true,
+        DESTROY_EMITTERS = true,
+        REMOVE_GRASS = true,
+        FPS_MONITOR = true,
+        
+        -- Previous Variables
         ENABLED = true,
         OPTIMIZATION_INTERVAL = 30,
         SHOW_UPDATELOG = true,
         MIN_INTERVAL = 3,
         MAX_DISTANCE = 50,
         PERFORMANCE_MONITORING = true,
-        FPS_MONITOR = true,
         FPS_THRESHOLD = 30,
         GRAY_SKY_ENABLED = true,
         FULL_BRIGHT_ENABLED = true,
@@ -200,15 +214,6 @@ local function Main(ExternalConfig)
         QUALITY_LEVEL = 1,
         FPS_CAP = 1000,
         MEMORY_CLEANUP_THRESHOLD = 500,
-        NETWORK_OPTIMIZATION = true,
-        REDUCE_REPLICATION = true,
-        THROTTLE_REMOTE_EVENTS = true,
-        OPTIMIZE_CHAT = true,
-        DISABLE_UNNECESSARY_GUI = true,
-        STREAMING_ENABLED = true,
-        REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
-        THROTTLE_SOUNDS = true,
-        DESTROY_EMITTERS = true,
     }
     ]]
         contentLabel.Text = configText
@@ -467,13 +472,37 @@ local function Main(ExternalConfig)
             or obj:IsA("Fire") 
             or obj:IsA("Smoke") 
             or obj:IsA("Sparkles") then
-                obj:Destroy() -- Completely removes the emitter
+                obj:Destroy()
             end
         end
     end
-    -- Example usage:
     RemoveEmitters()
-
+    local function gras()
+        if not Config.REMOVE_GRASS then return end
+        if not game:IsLoaded() then
+            repeat
+                task.wait()
+            until game:IsLoaded()
+        end
+        coroutine.wrap(pcall)(function()
+            local terrain = workspace:FindFirstChildOfClass("Terrain")
+            if not terrain then
+                repeat
+                    task.wait()
+                until workspace:FindFirstChildOfClass("Terrain")
+                terrain = workspace:FindFirstChildOfClass("Terrain")
+            end
+            if sethiddenproperty then
+                sethiddenproperty(terrain, "Decoration", false)
+            else
+                warn("Your exploit does not support sethiddenproperty, please use a different exploit.")
+            end
+            if _G.ConsoleLogs then
+                warn("Decorations Disabled")
+            end
+        end)
+    end
+    gras()
     local function fpsc()
         if not Config.FPS_MONITOR then return end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Fps-counter/refs/heads/main/Fpsc", true))()
