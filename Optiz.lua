@@ -1,4 +1,4 @@
--- i hate making things look pretty >:(
+-- beauty vs performance >:)
 
 local Config = {
     OPTIZ = true,
@@ -70,12 +70,7 @@ local function Main(ExternalConfig)
     local function setSmoothPlastic()
         if not Config.SMOOTH_PLASTIC_ENABLED then return end
         
-        local player = Players.LocalPlayer
-        
         local function handleInstance(instance)
-            if player and player.Character and instance:IsDescendantOf(player.Character) then
-                return
-            end
             if instance:IsA("BasePart") then
                 instance.Material = Enum.Material.SmoothPlastic
                 instance.Reflectance = 0
@@ -83,15 +78,16 @@ local function Main(ExternalConfig)
                 instance.Transparency = 1
             end
         end
+        
+        -- Process all existing instances
         for _, instance in ipairs(Workspace:GetDescendants()) do
             handleInstance(instance)
         end
         
+        -- Process new instances as they're added
         Workspace.DescendantAdded:Connect(handleInstance)
     end
     setSmoothPlastic()
-
-
     local function CreateUpdateLog()
         if not Config.SHOW_UPDATELOG then return end
         local screenGui = Instance.new("ScreenGui")
@@ -1152,7 +1148,6 @@ local function Main(ExternalConfig)
         local elementsToDisable = {
             "PlayerList", 
             "EmotesMenu", 
-            "Health",
             "BubbleChat"
         }
         
