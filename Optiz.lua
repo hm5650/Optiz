@@ -177,48 +177,50 @@ local function Main(ExternalConfig)
         contentLabel.LayoutOrder = 1
         contentLabel.Parent = scrollFrame
         local configText = [[
-    -- like the new design ;)
-    -- if one of the variables doesn't work you will need to update!!
-    local OptizConfig = {
-        
-        -- New Variables
-        NETWORK_OPTIMIZATION = true,
-        REDUCE_REPLICATION = true,
-        THROTTLE_REMOTE_EVENTS = true,
-        OPTIMIZE_CHAT = true,
-        DISABLE_UNNECESSARY_GUI = true,
-        STREAMING_ENABLED = true,
-        REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
-        THROTTLE_SOUNDS = true,
-        DESTROY_EMITTERS = true,
-        REMOVE_GRASS = true,
-        FPS_MONITOR = true,
-        
-        -- Previous Variables
-        OPTIZ = true,
-        OPTIMIZATION_INTERVAL = 30,
-        SHOW_UPDATELOG = true,
-        MIN_INTERVAL = 3,
-        MAX_DISTANCE = 50,
-        PERFORMANCE_MONITORING = true,
-        FPS_THRESHOLD = 30,
-        GRAY_SKY_ENABLED = true,
-        FULL_BRIGHT_ENABLED = true,
-        SMOOTH_PLASTIC_ENABLED = true,
-        OPTIMIZE_PHYSICS = true,
-        DISABLE_CONSTRAINTS = true,
-        THROTTLE_PARTICLES = true,
-        THROTTLE_TEXTURES = true,
-        REMOVE_ANIMATIONS = true,
-        LOW_POLY_CONVERSION = true,
-        SELECTIVE_TEXTURE_REMOVAL = true,
-        PRESERVE_IMPORTANT_TEXTURES = true,
-        IMPORTANT_TEXTURE_KEYWORDS = {"sign", "ui", "hud", "menu", "button", "fence"},
-        QUALITY_LEVEL = 1,
-        FPS_CAP = 1000,
-        MEMORY_CLEANUP_THRESHOLD = 500,
-        CORE = true,
-    }
+-- like the new UpdateLog design ;)
+-- if one of the variables doesn't work you will need to update or if there's new variables!!
+local Config = {
+    
+    -- New Variables
+    NETWORK_OPTIMIZATION = true,
+    REDUCE_REPLICATION = true,
+    THROTTLE_REMOTE_EVENTS = true,
+    OPTIMIZE_CHAT = true,
+    DISABLE_UNNECESSARY_GUI = true,
+    STREAMING_ENABLED = true,
+    REDUCE_PLAYER_REPLICATION_DISTANCE = 100,
+    THROTTLE_SOUNDS = true,
+    DESTROY_EMITTERS = true,
+    REMOVE_GRASS = true,
+    CORE = true,
+    FPS_MONITOR = true,
+    OPTIZ = true,
+
+    -- Previous Variables
+    OPTIMIZATION_INTERVAL = 10,
+    SHOW_UPDATELOG = true,
+    MIN_INTERVAL = 3,
+    MAX_DISTANCE = 50,
+    PERFORMANCE_MONITORING = true,
+    FPS_THRESHOLD = 30,
+    GRAY_SKY_ENABLED = true,
+    GRAY_SKY_ID = "rbxassetid://114666145996289",
+    FULL_BRIGHT_ENABLED = true,
+    SMOOTH_PLASTIC_ENABLED = true,
+    COLLISION_GROUP_NAME = "OptimizedParts",
+    OPTIMIZE_PHYSICS = true,
+    DISABLE_CONSTRAINTS = true,
+    THROTTLE_PARTICLES = true,
+    THROTTLE_TEXTURES = true,
+    REMOVE_ANIMATIONS = true,
+    LOW_POLY_CONVERSION = true,
+    SELECTIVE_TEXTURE_REMOVAL = true,
+    PRESERVE_IMPORTANT_TEXTURES = true,
+    IMPORTANT_TEXTURE_KEYWORDS = {"sign", "ui", "hud", "menu", "button", "fence"},
+    QUALITY_LEVEL = 1,
+    FPS_CAP = 1000,
+    MEMORY_CLEANUP_THRESHOLD = 500,
+}
     ]]
         contentLabel.Text = configText
         local function updateCanvasSize()
