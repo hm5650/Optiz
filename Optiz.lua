@@ -1,7 +1,7 @@
--- Hey this for testing >:(
+-- >:(
 
 local Config = {
-    ENABLED = true,
+    OPTIZ = true,
     OPTIMIZATION_INTERVAL = 30,
     SHOW_UPDATELOG = true,
     MIN_INTERVAL = 3,
@@ -36,6 +36,7 @@ local Config = {
     THROTTLE_SOUNDS = true,
     DESTROY_EMITTERS = true,
     REMOVE_GRASS = true,
+    CORE = true,
 }
 
 local function Main(ExternalConfig)
@@ -177,7 +178,9 @@ local function Main(ExternalConfig)
         contentLabel.Parent = scrollFrame
         local configText = [[
     -- like the new design ;)
+    -- if one of the variables doesn't work you will need to update!!
     local OptizConfig = {
+        
         -- New Variables
         NETWORK_OPTIMIZATION = true,
         REDUCE_REPLICATION = true,
@@ -192,7 +195,7 @@ local function Main(ExternalConfig)
         FPS_MONITOR = true,
         
         -- Previous Variables
-        ENABLED = true,
+        OPTIZ = true,
         OPTIMIZATION_INTERVAL = 30,
         SHOW_UPDATELOG = true,
         MIN_INTERVAL = 3,
@@ -214,6 +217,7 @@ local function Main(ExternalConfig)
         QUALITY_LEVEL = 1,
         FPS_CAP = 1000,
         MEMORY_CLEANUP_THRESHOLD = 500,
+        CORE = true,
     }
     ]]
         contentLabel.Text = configText
@@ -918,6 +922,7 @@ local function Main(ExternalConfig)
         end
     end
     local function Core()
+        if not Config.CORE then return end
         settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
         settings().Physics.AllowSleep = true
         settings().Rendering.QualityLevel = Config.QUALITY_LEVEL
@@ -1198,7 +1203,7 @@ local function Main(ExternalConfig)
         end)
     end
     local function applya()
-        if not Config.ENABLED then return end
+        if not Config.OPTIZ then return end
         
         applyGraySky()
         applyFullBright()
